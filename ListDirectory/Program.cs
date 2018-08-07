@@ -11,19 +11,25 @@ namespace ListDirectory
     static class Program
     {
         public static string DirectoryPath;
+        public static bool ExcludeDir;
+        public static bool ExcludeFile;
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            DirectoryPath = "";
+            ExcludeDir = false;
+            ExcludeFile = false;
+
             switch(getParentProcess())
             {
 #if DEBUG
                 case "devenv":
-                    loadCommandArgs(args);
-                    break;
+                    //loadCommandArgs(args);
+                    //break;
 #endif
 
                 case "cmd":
@@ -38,6 +44,20 @@ namespace ListDirectory
                     MessageBox.Show("Could not get parent process name.", "Unspecified error.", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     break;
             }            
+        }
+
+        public static void ListFoldersAndFiles(string path, out List<string> dir, out List<string> file)
+        {
+            if(!string.IsNullOrWhiteSpace(path))
+            {
+                dir = Directory.GetDirectories(path).ToList();
+                file = Directory.GetFiles(path).ToList();
+            }
+            else
+            {
+                dir = new List<string>();
+                file = new List<string>();
+            }
         }
 
         private static string getParentProcess()
@@ -56,6 +76,26 @@ namespace ListDirectory
         private static void runFromCmd(string[] args)
         {
             loadCommandArgs(args);
+
+            List<string> dir = new List<string>();
+            List<string> file = new List<string>();
+            ListFoldersAndFiles(DirectoryPath, out dir, out file);
+
+            List<string> items = new List<string>();
+            if(!ExcludeDir)
+            {
+                items.AddRange(dir);
+            }
+
+            if(!ExcludeFile)
+            {
+                items.AddRange(file);
+            }
+
+            foreach (var item in items)
+            {
+                Console.WriteLine(item);
+            }
             //Get directory contents
             //Remove exclusions
             //Send to supplied text document
@@ -101,7 +141,15 @@ namespace ListDirectory
                         }                        
                         break;
 
-                    default:
+                    case "-ed":
+                        ExcludeDir = true;
+                        break;
+
+                    case "-ef":
+                        ExcludeFile = true;
+                        break;
+
+                    case "-?":
                         displayHelp();
                         break;
                 }
