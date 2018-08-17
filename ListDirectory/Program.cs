@@ -13,6 +13,8 @@ namespace ListDirectory
         public static string DirectoryPath;
         public static bool ExcludeDir;
         public static bool ExcludeFile;
+        public static bool ExcludeExtensions;
+        public static string OutputPath;
 
         /// <summary>
         /// The main entry point for the application.
@@ -23,13 +25,15 @@ namespace ListDirectory
             DirectoryPath = "";
             ExcludeDir = false;
             ExcludeFile = false;
+            ExcludeExtensions = false;
+            OutputPath = "";
 
             switch(getParentProcess())
             {
 #if DEBUG
                 case "devenv":
-                    //loadCommandArgs(args);
-                    //break;
+                    runFromExplorer();
+                    break;
 #endif
 
                 case "cmd":
@@ -58,6 +62,42 @@ namespace ListDirectory
                 dir = new List<string>();
                 file = new List<string>();
             }
+        }
+
+        public static List<string> GetFolderAndFileNames(List<string> items, bool showExtensions)
+        {
+            List<string> returnItems = new List<string>();
+            foreach (var item in items)
+            {
+                if(showExtensions)
+                {
+                    returnItems.Add(Path.GetFileName(item));
+                }
+                else
+                {
+                    returnItems.Add(Path.GetFileNameWithoutExtension(item));
+                }                                
+            }
+
+            return returnItems;
+        }
+
+        public static void SaveOutputFile(string path, List<string> items)
+        {
+            if(!string.IsNullOrWhiteSpace(path))
+            {
+                if(!File.Exists(path))
+                {
+                    using (File.CreateText(path)) { }
+                }
+                using (StreamWriter streamWriter = new StreamWriter(path))
+                {
+                    foreach (var item in items)
+                    {
+                        streamWriter.WriteLine(item);
+                    }
+                }
+            }            
         }
 
         private static string getParentProcess()
@@ -92,13 +132,12 @@ namespace ListDirectory
                 items.AddRange(file);
             }
 
-            foreach (var item in items)
+            items = GetFolderAndFileNames(items, !ExcludeExtensions);
+            if(string.IsNullOrWhiteSpace(OutputPath))
             {
-                Console.WriteLine(item);
+                OutputPath = DirectoryPath + "\\" + Path.GetFileName(DirectoryPath) + ".txt";
             }
-            //Get directory contents
-            //Remove exclusions
-            //Send to supplied text document
+            SaveOutputFile(OutputPath, items);
         }
 
         private static void runFromExplorer()
@@ -118,10 +157,10 @@ namespace ListDirectory
             }
             foreach (string arg in arguments)
             {
-                switch (arg)
+                int index = arguments.IndexOf(arg);
+                switch (arg.ToLower())
                 {
                     case "-dir":
-                        int index = arguments.IndexOf(arg);
                         if(index + 1 != arguments.Count)
                         {
                             string value = arguments[index + 1];
@@ -147,6 +186,23 @@ namespace ListDirectory
 
                     case "-ef":
                         ExcludeFile = true;
+                        break;
+
+                    case "-ee":
+                        ExcludeExtensions = true;
+                        break;
+
+                    case "-o":
+                        if (index + 1 != arguments.Count)
+                        {
+                            string value = arguments[index + 1];
+                            value = value.Replace("\"", "");
+                            OutputPath = value;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No directory specified.", "Invalid number of arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                         break;
 
                     case "-?":
