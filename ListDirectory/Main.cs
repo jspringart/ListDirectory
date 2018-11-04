@@ -62,5 +62,16 @@ namespace ListDirectory
         {
             updateNames(m_FullList);
         }
+
+        private void remove_Click(object sender, EventArgs e)
+        {
+            foreach (var item in names.SelectedItems)
+            {
+                var test = m_FullList.FirstOrDefault(s => s.Contains(item.ToString()));
+                string ss = test;
+                m_FullList.Remove(test.ToString());
+            }
+            updateNames(m_FullList);
+        }
     }
 }

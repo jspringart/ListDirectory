@@ -87,6 +87,7 @@
             this.remove.TabIndex = 6;
             this.remove.Text = "Remove";
             this.remove.UseVisualStyleBackColor = true;
+            this.remove.Click += new System.EventHandler(this.remove_Click);
             // 
             // options
             // 
@@ -94,7 +95,7 @@
             this.options.Controls.Add(this.extensions);
             this.options.Location = new System.Drawing.Point(396, 43);
             this.options.Name = "options";
-            this.options.Size = new System.Drawing.Size(119, 323);
+            this.options.Size = new System.Drawing.Size(158, 348);
             this.options.TabIndex = 7;
             this.options.TabStop = false;
             this.options.Text = "Options";
@@ -105,7 +106,7 @@
             this.exclusions.Controls.Add(this.exclusionsEnable);
             this.exclusions.Location = new System.Drawing.Point(6, 43);
             this.exclusions.Name = "exclusions";
-            this.exclusions.Size = new System.Drawing.Size(113, 70);
+            this.exclusions.Size = new System.Drawing.Size(146, 70);
             this.exclusions.TabIndex = 7;
             this.exclusions.TabStop = false;
             this.exclusions.Text = "Exclusions";
@@ -114,7 +115,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 43);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(101, 22);
+            this.textBox1.Size = new System.Drawing.Size(134, 22);
             this.textBox1.TabIndex = 1;
             // 
             // exclusionsEnable
@@ -144,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 403);
+            this.ClientSize = new System.Drawing.Size(566, 403);
             this.Controls.Add(this.options);
             this.Controls.Add(this.remove);
             this.Controls.Add(this.toTxt);

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Windows.Forms;
+using System.Text;
 
 namespace ListDirectory
 {
@@ -214,7 +215,13 @@ namespace ListDirectory
 
         private static void displayHelp()
         {
-            Console.WriteLine("-dir\tPath of directory to list contents.");
+            StringBuilder helpOutput = new StringBuilder();
+            helpOutput.AppendLine("-dir\tPath of directory to list contents.");
+            helpOutput.AppendLine("-ed\tExclude directories.");
+            helpOutput.AppendLine("-ef\tExclude files.");
+            helpOutput.AppendLine("-ee\tExclude extensions.");
+            helpOutput.AppendLine("-o\tOutput file path.");
+            Console.WriteLine(helpOutput.ToString());
         }
     }
 }
