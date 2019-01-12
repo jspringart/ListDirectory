@@ -111,6 +111,7 @@
             this.exclusions.TabIndex = 7;
             this.exclusions.TabStop = false;
             this.exclusions.Text = "Exclusions";
+            this.exclusions.Visible = false;
             // 
             // textBox1
             // 
