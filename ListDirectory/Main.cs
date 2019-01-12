@@ -73,5 +73,16 @@ namespace ListDirectory
             }
             updateNames(m_FullList);
         }
+
+        private void toTxt_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                if(sfd.ShowDialog() == DialogResult.OK)
+                {
+                    Program.SaveOutputFile(sfd.FileName, m_DisplayList);
+                }
+            }
+        }
     }
 }

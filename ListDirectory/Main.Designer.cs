@@ -58,7 +58,7 @@
             // 
             this.names.FormattingEnabled = true;
             this.names.HorizontalScrollbar = true;
-            this.names.ItemHeight = 16;
+            this.names.ItemHeight = 12;
             this.names.Location = new System.Drawing.Point(101, 12);
             this.names.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.names.Name = "names";
@@ -76,6 +76,7 @@
             this.toTxt.TabIndex = 3;
             this.toTxt.Text = "Save";
             this.toTxt.UseVisualStyleBackColor = true;
+            this.toTxt.Click += new System.EventHandler(this.toTxt_Click);
             // 
             // remove
             // 
@@ -115,7 +116,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 43);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(134, 22);
+            this.textBox1.Size = new System.Drawing.Size(134, 19);
             this.textBox1.TabIndex = 1;
             // 
             // exclusionsEnable
@@ -123,7 +124,7 @@
             this.exclusionsEnable.AutoSize = true;
             this.exclusionsEnable.Location = new System.Drawing.Point(6, 19);
             this.exclusionsEnable.Name = "exclusionsEnable";
-            this.exclusionsEnable.Size = new System.Drawing.Size(78, 20);
+            this.exclusionsEnable.Size = new System.Drawing.Size(62, 18);
             this.exclusionsEnable.TabIndex = 0;
             this.exclusionsEnable.Text = "Enable";
             this.exclusionsEnable.UseVisualStyleBackColor = true;
@@ -135,7 +136,7 @@
             this.extensions.CheckState = System.Windows.Forms.CheckState.Checked;
             this.extensions.Location = new System.Drawing.Point(6, 19);
             this.extensions.Name = "extensions";
-            this.extensions.Size = new System.Drawing.Size(143, 20);
+            this.extensions.Size = new System.Drawing.Size(114, 18);
             this.extensions.TabIndex = 0;
             this.extensions.Text = "With Extensions";
             this.extensions.UseVisualStyleBackColor = true;
@@ -143,7 +144,7 @@
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(566, 403);
             this.Controls.Add(this.options);
